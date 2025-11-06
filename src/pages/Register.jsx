@@ -1,38 +1,31 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axiosClient from "../api/axitosClient";
 
-function Login() {
+function Register() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
     try {
-        const response = await axiosClient.post("/users/login", {
-            username,
-            password,
-        });
-
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("userId", response.data.user.id);
-        localStorage.setItem("username", response.data.user.username);
-
-        navigate("/feed");
+      await axiosClient.post("/users/register", { username, password });
+      alert("Đăng ký thành công! Hãy đăng nhập nhé 😎");
+      navigate("/login");
     } catch (err) {
       console.error(err);
-      setError("Tên đăng nhập hoặc mật khẩu sai.");
+      setError("Tên người dùng đã tồn tại hoặc lỗi server.");
     }
   };
 
   return (
     <div style={styles.container}>
       <div style={styles.card}>
-        <h2 style={{ marginBottom: "20px" }}>Đăng nhập</h2>
+        <h2 style={{ marginBottom: "20px" }}>Đăng ký tài khoản</h2>
         {error && <p style={styles.error}>{error}</p>}
-        <form onSubmit={handleLogin}>
+        <form onSubmit={handleRegister}>
           <input
             type="text"
             placeholder="Tên đăng nhập"
@@ -50,11 +43,11 @@ function Login() {
             required
           />
           <button type="submit" style={styles.button}>
-            Đăng nhập
+            Đăng ký
           </button>
         </form>
         <p style={{ marginTop: "15px" }}>
-          Chưa có tài khoản? <Link to="/register">Đăng ký ngay</Link>
+          Đã có tài khoản? <Link to="/login">Đăng nhập ngay</Link>
         </p>
       </div>
     </div>
@@ -101,4 +94,4 @@ const styles = {
   },
 };
 
-export default Login;
+export default Register;

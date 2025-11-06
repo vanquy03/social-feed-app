@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axitosClient from "../api/axitosClient.js";
+import axitosClient from "../api/axitosClient";
 
 const CreatePost = ({ onPostCreated }) => {
     const [content, setContent] = useState("");
