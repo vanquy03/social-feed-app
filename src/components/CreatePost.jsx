@@ -10,7 +10,7 @@ const CreatePost = ({ onPostCreated }) => {
         setError("");
         try {
             const userId = localStorage.getItem("userId"); // lấy từ khi login
-            await axitosClient.post("/posts", { content, userId });
+            await axitosClient.post("posts/create", { content, userId });
             setContent("");
             if (onPostCreated) onPostCreated();
         } catch (err) {

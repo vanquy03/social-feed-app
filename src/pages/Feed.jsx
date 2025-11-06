@@ -8,7 +8,7 @@ function Feed() {
 
   const fetchPosts = async () => {
     try {
-      const response = await axiosClient.get("/posts");
+      const response = await axiosClient.get("posts/get_all");
       setPosts(response.data);
     } catch (err) {
       console.error("❌ Lỗi khi tải bài viết:", err);

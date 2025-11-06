@@ -1,6 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
+import axitosClient from "../api/axitosClient";
+
 
 function PostCard({ post }) {
+
+  const [likeCount, setLikeCount] = useState(post.likeCount);
+  const [liked, setLiked] = useState(post.liked);
+  // const [commentCount, setCommentCount] = useState(post.commentCount);  
+
+  const handleLike = async () => {
+    try {
+      const userId = localStorage.getItem("userId"); // lấy từ khi login
+      const response = await axitosClient.post("likes/likeorunlike", {
+        UserId:userId, 
+        PostId: post.id
+      });
+      
+	  if (response.data === "Liked") {
+		setLikeCount(likeCount + 1);
+		setLiked(true);
+	  }else if (response.data === "Unliked") {
+		setLikeCount(likeCount - 1);
+		setLiked(false);
+	  }
+
+    } catch (err) {
+      console.error("❌ Lỗi khi thích bài viết:", err);
+    }
+  }
+
   return (
     <div className="post-card" style={styles.card}>
       <div style={styles.header}>
@@ -13,12 +41,15 @@ function PostCard({ post }) {
       <p style={styles.content}>{post.content}</p>
 
       <div style={styles.footer}>
-        <span>❤️ {post.likeCount}</span>
+        <button onClick={handleLike}>
+          {liked ? "❤️ Đã thích" : "🤍 Thích"} ({likeCount})
+        </button>
         <span>💬 {post.commentCount}</span>
       </div>
     </div>
   );
 }
+
 
 const styles = {
   card: {
