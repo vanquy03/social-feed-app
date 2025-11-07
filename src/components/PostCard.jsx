@@ -1,29 +1,34 @@
 import React, { useState } from "react";
 import axitosClient from "../api/axitosClient";
-
+import CommentSection from "./CommentSection";
 
 function PostCard({ post }) {
-
+  debugger;
   const [likeCount, setLikeCount] = useState(post.likeCount);
-  const [liked, setLiked] = useState(post.liked);
-  // const [commentCount, setCommentCount] = useState(post.commentCount);  
+  const [liked, setLiked] = useState(post.isLiked);
+
+  const [commentCount, setCommentCount] = useState(post.commentCount);
+  const [showComments, setShowComments] = useState(false);
+
+  const handleCommentAdded = () => {
+    setCommentCount(commentCount + 1);
+  }
 
   const handleLike = async () => {
     try {
       const userId = localStorage.getItem("userId"); // lấy từ khi login
       const response = await axitosClient.post("likes/likeorunlike", {
-        UserId:userId, 
+        UserId: userId,
         PostId: post.id
       });
-      
-	  if (response.data === "Liked") {
-		setLikeCount(likeCount + 1);
-		setLiked(true);
-	  }else if (response.data === "Unliked") {
-		setLikeCount(likeCount - 1);
-		setLiked(false);
-	  }
 
+      if (response.data === "Liked") {
+        setLikeCount(likeCount + 1);
+        setLiked(true);
+      } else if (response.data === "Unliked") {
+        setLikeCount(likeCount - 1);
+        setLiked(false);
+      }
     } catch (err) {
       console.error("❌ Lỗi khi thích bài viết:", err);
     }
@@ -44,8 +49,13 @@ function PostCard({ post }) {
         <button onClick={handleLike}>
           {liked ? "❤️ Đã thích" : "🤍 Thích"} ({likeCount})
         </button>
-        <span>💬 {post.commentCount}</span>
+        <button onClick={() => setShowComments(!showComments)}>
+          <span>💬 {commentCount}</span>
+        </button>
       </div>
+      {showComments && (
+        <CommentSection postId={post.id} onCommentAdded={handleCommentAdded} />
+      )}
     </div>
   );
 }

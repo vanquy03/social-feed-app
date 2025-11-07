@@ -8,7 +8,8 @@ function Feed() {
 
   const fetchPosts = async () => {
     try {
-      const response = await axiosClient.get("posts/get_all");
+      const userId = localStorage.getItem("userId");
+      const response = await axiosClient.get(`posts/get_all?userId=${userId}`);
       setPosts(response.data);
     } catch (err) {
       console.error("❌ Lỗi khi tải bài viết:", err);
