@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import axiosClient from "../api/axitosClient";
+import axiosClient from "../api/axiosClient";
 
 function Register() {
   const [username, setUsername] = useState("");

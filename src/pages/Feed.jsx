@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axiosClient from "../api/axitosClient";
+import axiosClient from "../api/axiosClient";
 import PostCard from "../components/PostCard";
 import CreatePost from "../components/CreatePost";
 

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import axiosClient from "../api/axitosClient";
+import axiosClient from "../api/axiosClient";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -23,7 +23,7 @@ function Login() {
         navigate("/feed");
     } catch (err) {
       console.error(err);
-      setError("Tên đăng nhập hoặc mật khẩu sai.");
+      setError("Tên đăng nhập hoặc mật khẩu sai: ");
     }
   };
 

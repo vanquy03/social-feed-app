@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const axitosClient = axios.create({
+const axiosClient = axios.create({
   baseURL: "https://localhost:7273/api",
   headers: {
     "Content-Type": "application/json",
@@ -8,7 +8,7 @@ const axitosClient = axios.create({
 });
 
 // Thêm interceptor để tự động gắn token
-axitosClient.interceptors.request.use(
+axiosClient.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token");
 
@@ -26,4 +26,4 @@ axitosClient.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-export default axitosClient;
+export default axiosClient;

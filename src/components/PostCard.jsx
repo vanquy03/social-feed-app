@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import axitosClient from "../api/axitosClient";
+import axiosClient from "../api/axiosClient";
 import CommentSection from "./CommentSection";
 
 function PostCard({ post }) {
-  debugger;
   const [likeCount, setLikeCount] = useState(post.likeCount);
   const [liked, setLiked] = useState(post.isLiked);
 
@@ -17,7 +16,7 @@ function PostCard({ post }) {
   const handleLike = async () => {
     try {
       const userId = localStorage.getItem("userId"); // lấy từ khi login
-      const response = await axitosClient.post("likes/likeorunlike", {
+      const response = await axiosClient.post("likes/likeorunlike", {
         UserId: userId,
         PostId: post.id
       });

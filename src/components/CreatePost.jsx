@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axitosClient from "../api/axitosClient";
+import axiosClient from "../api/axiosClient";
 
 const CreatePost = ({ onPostCreated }) => {
     const [content, setContent] = useState("");
@@ -10,7 +10,7 @@ const CreatePost = ({ onPostCreated }) => {
         setError("");
         try {
             const userId = localStorage.getItem("userId"); // lấy từ khi login
-            await axitosClient.post("posts/create", { content, userId });
+            await axiosClient.post("posts/create", { content, userId });
             setContent("");
             if (onPostCreated) onPostCreated();
         } catch (err) {
